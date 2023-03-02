@@ -7,17 +7,18 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-public class Testgithub {
+public class TestGitHub {
     @BeforeAll
     static void beforeAll() {
         browserSize = "1920x1080";
     }
 
     @Test
-    void gitTest() {
+    void GitTest() {
         open("https://github.com/selenide/selenide");
         $("#wiki-tab").click();
-        $(".gollum-markdown-content").shouldHave(text("Soft assertions"));
+        $("#wiki-pages-filter").setValue("SoftAssertions");
+        $("div.wiki-rightbar").$$("div ul").first().shouldHave(text("SoftAssertions"));
         $(byText("Soft assertions")).click();
         $(".markdown-body").shouldHave(text("Using JUnit5 extend test class"));
 
