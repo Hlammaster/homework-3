@@ -20,7 +20,21 @@ public class TestGitHub {
         $("#wiki-pages-filter").setValue("SoftAssertions");
         $("div.wiki-rightbar").$$("div ul").first().shouldHave(text("SoftAssertions"));
         $(byText("Soft assertions")).click();
-        $(".markdown-body").shouldHave(text("Using JUnit5 extend test class"));
+        var testText = """
+                @ExtendWith({SoftAssertsExtension.class})
+                class Tests {
+                  @Test
+                  void test() {
+                    Configuration.assertionMode = SOFT;
+                    open("page.html");
+                                
+                    $("#first").should(visible).click();
+                    $("#second").should(visible).click();
+                  }
+                }
+                """;
+        $(".markdown-body").shouldHave(text("Using JUnit5 extend test class")).shouldHave(text(testText));
+
 
     }
 
